@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣旅遊網</title>
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *{ /*將網頁外距reset為0*/
+            padding: 0px;
+            margin: 0px;
+        
+        }
+        ul{
+            list-style: none;
+            /* 取消list前面的點 */
+        }
+        body{
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .flex{ /*將左右排列功能設定為一個class* */
+            display: flex;            
+        }
+        .hide{
+            display: none;
+        }
+        .justify-content-between{
+            justify-content: space-between;
+            /* 左右平均排列 */
+        }
+        .justify-center{
+            justify-content: center;
+        }
+        .align-items-center{
+            align-items: center;
+            /* 上下置中 */
+        }
+        .pt-20{
+            padding-top: 20px;
+        }
+        .px-24{
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        .px-20{
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        .logo h1{            
+            font-weight: bold;
+            font-size: 36px;
+            line-height: 49px;
+            color: #FFFFFF;
+        }
+        .like img{            
+            width: 40px;
+            height: 40px;
+        }
+        .menu-list{            
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 33px;  
+        }
+        .menu-list li{
+            padding: 0 40px;
+        }
+        
+        .banner{
+            height: 667px;
+            
+            background-color: rgba(223, 21, 7, 0.856);/*在banner的背景填入顏色(可不做)  */
+            background-image: url("./img/banner.png");/*在banner區塊填入背景*/
+            background-size: cover;/*背景填滿*/
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center; 
+            overflow: hidden; /*多出來的部分隱藏  */
+        }
+        .position-fixed{
+            position: fixed;
+            left: 0;            
+            right: 0;
+            /* 區塊往左右邊界填滿 */
+        }
+        /* nav > ul > li{
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+        nav > ul > li > a{
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 33px;
+            color: #FFFFFF;
+            text-decoration: none;
+        } 與下面header作法有依樣效果*/
+        header{                      
+            color: #FFFFFF;
+            z-index: 1;       /* 圖層數字越大越前面 */
+        }
+        
+        header a{
+            color: #FFFFFF;
+            text-decoration: none;            
+        }
+        header a:hover{
+            text-decoration: underline;
+        }
+         
+        .position-center{
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .display-box{
+            width: 100%;
+        }
+        .display-text{  
+            color: #FFFFFF;
+            text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            text-align: center;/*文字內容置中*/
+            font-weight: 500;
+            font-size: 36px;
+            line-height: 49px;
+            margin-bottom: 17px;
+        }
+        .text-center{
+            text-align: center;/*文字內容置中*/
+        }
+        img{
+            max-width: 100%;   
+            display: block;         
+        }
+        .input-container{
+            /* max-width: 796px; */
+            /* 設定區塊寬度的最大範圍 */
+            /*  max-width可以再不同裝置畫面自動調整大小,但是最大範圍為796px */
+            /* position: relative;             */
+            padding: 0 36px;
+            box-sizing: border-box;
+        }
+        .input-container > input{
+            width: 100%;
+            /* 此設定可以使輸入框依照container的變化100%填滿 */
+            background: #FFFFFF;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+            border-radius: 130px;/* 外框圓角 */
+            height: 50px;
+            border: 0;/*輸入框的外框為0  */
+            padding-left: 27px;
+            box-sizing: border-box;          
+            
+        }
+        .input-container > input::placeholder{
+            color: #7E7E7E;
+            /* placeholder改顏色的方法 */
+            /* 不能直接從input裡面改 */
+            /* padding: 16px 28px; */
+            font-size: 18px;
+            line-height: 25px;
+            font-weight: 500;
+        }
+        .image-container{
+            width: 796px;
+            padding: 0 24px;
+            /* 此padding的目的為在畫面翻轉時可以避免輸入框和溫度內容過於貼近畫面邊框  */
+        }
+        .position-absolute{
+            position: absolute;
+        }
+        .position-relative{
+            position: relative;
+        }
+        .top-0{
+            top: 0;
+        }
+        .left-0{
+            left: 0;
+        }
+        .search-icon{
+            top: 50%;
+            right: 5%;
+            transform: translate(0, -50%); /*同等於translateY(-50%)*/
+        }
+        .search-icon > i{
+            font-size: 24px;
+            color: #FFB800;
+        }
+        .pt-35{
+            padding-top: 35px;
+        }
+        .mb-18{
+            margin-bottom: 18px;
+        }
+        .fs-20{
+            font-size: 20px;
+        }
+        .fw-500{
+            font-weight: 500px;
+        }
+        .line-h-27{
+            line-height: 27px;
+        }
+        .font-noto{
+            font-family: Noto Sans;
+            font-style: italic;
+        }
+        .pd-25{
+            padding:0 25px;
+        }
+        .pb-32{
+            padding-bottom: 32px;
+        }        
+        .mx-6{
+            margin-left: 6px;
+            margin-right: 6px;
+        }
+        .btn{
+            border-radius: 100px;
+            padding: 5px 15px;  
+            border: 1px solid #C4C4C4;  
+            background-color: transparent;  
+            transition: all 0.3s;      
+        }
+        .btn:hover{
+            color: #FFFFFF;  /* 文字變白色 */
+            background: #FFB800;
+            border: 1px solid #FFB800;
+            cursor: pointer;
+        }
+        .card{
+            /* float: left; */
+            border-radius: 10px;
+            margin: auto;
+            overflow: hidden;  
+            background: #FFFFFF; 
+            filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.25));  
+            border: none;
+        }
+        .card-img{
+            
+        }
+        .card-img img{
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .card-icon{
+            width: 15px;
+            height: 15px;
+        }
+        .card-icon img{
+            height: 100%;
+        }
+        .card-title{
+            font-weight: 500;
+            font-size: 8px;
+            line-height: 11px;
+        }
+        .card-content{
+            padding: 4px 14px;
+        }
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 26px;
+        }
+        .row{
+            flex-wrap: wrap;
+            margin-left: -12px;
+            margin-right: -12px;
+        }
+        .col-50{
+            flex-basis: 50%;
+            flex-grow: 0; /* 不要延展 */
+            flex-shrink: 0; /* 不要收縮 */
+            width: 50%;
+            box-sizing: border-box;
+        }
+        .px-12{
+            padding-left: 12px;
+            padding-right: 12px;
+            box-sizing: border-box;
+        }
+        .pc-size-85{
+            padding-top: 85%;
+        }
+        .inset{
+            /* 圖片填滿 */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        /*
+        ** small=sm 畫面大小576px以上
+        ** md=medium 畫面大小768px以上
+        ** lg=large 畫面大小992px以上
+        */
+        @media (min-width: 768px){
+            .md-block{
+                display: block;
+            }
+            .md-display-text{
+                font-size: 100px;
+                line-height: 136px;
+            }
+            .container{
+            max-width: 716px;
+            margin: 0 auto;
+        }
+        }
+        @media (min-width: 992px){
+            .px-lg-40{
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+            .container{
+            max-width: 940px;
+            margin: 0 auto;
+            }
+            .col-lg-25{
+                flex-basis: 25%;
+                flex-grow: 0; /* 不要延展 */
+                flex-shrink: 0; /* 不要收縮 */
+                width: 25%;
+            }
+            .card-content{
+            padding: 15px 15px 15px 32px;
+        }
+        }
+        @media (min-width: 992px){
+            .px-lg-40{
+                padding-left: 40px;
+                padding-right: 40px;
+            }
+            .container{
+            max-width: 1148px;
+            margin: 0 auto;
+        }
+        }
+    </style>
+</head>
+<body>
+    <header class="position-fixed flex align-items-center justify-content-between pt-20 px-24">
+        <div class="logo flex align-items-center">
+            <h1>GOTaiwan</h1>
+        </div>
+        <nav class="hide flex md-block">
+            <ul class="flex align-items-center menu-list">
+                <li class="px-20 px-lg-40"><a href="javascript:;">好去處</a></li>
+                <li class="px-20 px-lg-40"><a href="javascript:;">好好玩</a></li>
+                <li class="px-20 px-lg-40"><a href="javascript:;">好住宿</a></li>
+                <li class="px-20 px-lg-40"><a href="javascript:;">好好評</a></li>
+            </ul>
+        </nav>
+        <div class="like">
+            <img src="./img/headerlove_unstroke.svg" alt="">        
+        </div>
+    </header>
+    <main>
+        <!-- <section>
+            <img src="./img/banner.png" width="100%" alt="">
+            <div class="position-center">
+                <div class="display-text">Taipei,25°C</div>
+                <div class="input-container">
+                    <input type="text">
+                </div>
+            </div>
+        </section>
+        這個寫法較適合中間區塊內容較少的情況使用 -->
+        <section class="banner flex justify-center align-items-center">
+            <div class="image-container">
+                <div class="display-text md-display-text flex justify-center">Taipei,25°C</div>
+                <div class="input-container text-align position-relative">
+                    <input type="text" placeholder="想去哪?">
+                    <div class="position-absolute search-icon">
+                        <i class="fa fa-search"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2 class="pt-35 mb-18 text-center fs-20 fw-500 line-h-27 font-noto">附近城市</h2>
+            <div class="pd-25 pb-32 flex justify-center">
+                <button class="mx-6 btn">台北市</button>
+                <button class="mx-6 btn">新北市</button>
+                <button class="mx-6 btn">桃園市</button>
+                <button class="mx-6 btn">基隆市</button>                                
+            </div>
+        </section>
+        <section>
+            <h2 class="pt-35 mb-18 text-center fs-20 fw-500 line-h-27 font-noto">周末好去處</h2>
+            <div class="container">
+                <div class="flex row">
+                    <div class="col-50 col-lg-25 px-12">
+                        <div class="card">
+                            <div class="card-img pc-size-85 position-relative">
+                                <img class="position-absolute inset" src="./img/tree.jpg" alt="">
+                            </div> 
+                            <div class="card-content">
+                                <div class="flex justify-content-between">
+                                    <div class="card-title">台北象山</div>
+                                    <div class="card-icon">
+                                        <img src="./img/headerlove_unstroke.svg" alt="">
+                                    </div>                        
+                                </div>
+                            </div>                                       
+                        </div> 
+                    </div>
+                    <div class="col-50 col-lg-25 px-12">
+                        <div class="card">
+                            <div class="card-img pc-size-85 position-relative">
+                                <img class="position-absolute inset" src="./img/tree.jpg" alt="">
+                            </div> 
+                            <div class="card-content">
+                                <div class="flex justify-content-between">
+                                    <div class="card-title">台北象山</div>
+                                    <div class="card-icon">
+                                        <img src="./img/headerlove_unstroke.svg" alt="">
+                                    </div>                        
+                                </div>
+                            </div>                                       
+                        </div> 
+                    </div>
+                    <div class="col-50 col-lg-25 px-12">
+                        <div class="card">
+                            <div class="card-img pc-size-85 position-relative">
+                                <img class="position-absolute inset" src="./img/tree.jpg" alt="">
+                            </div> 
+                            <div class="card-content">
+                                <div class="flex justify-content-between">
+                                    <div class="card-title">台北象山</div>
+                                    <div class="card-icon">
+                                        <img src="./img/headerlove_unstroke.svg" alt="">
+                                    </div>                        
+                                </div>
+                            </div>                                       
+                        </div> 
+                    </div>
+                    <div class="col-50 col-lg-25 px-12">
+                        <div class="card">
+                            <div class="card-img pc-size-85 position-relative">
+                                <img class="position-absolute inset" src="./img/tree.jpg" alt="">
+                            </div> 
+                            <div class="card-content">
+                                <div class="flex justify-content-between">
+                                    <div class="card-title">台北象山</div>
+                                    <div class="card-icon">
+                                        <img src="./img/headerlove_unstroke.svg" alt="">
+                                    </div>                        
+                                </div>
+                            </div>                                       
+                        </div> 
+                    </div>
+                </div>
+            </div>     
+        </section>
+    </main>
+    <footer></footer> 
+</body>
+</html>
